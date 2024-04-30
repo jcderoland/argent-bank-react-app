@@ -1,15 +1,20 @@
 import React from 'react';
-import { Route, Routes as RouterRoutes } from 'react-router-dom';
-import HomePage from './pages/HomePage.jsx';
-import SignInPage from './pages/SignInPage.jsx';
-import DashboardPage from './pages/DashboardPage.jsx';
+import { Routes as RouterRoutes, Route, Navigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import HomePage from './pages/HomePage';
+import SignInPage from './pages/SignInPage';
+import DashboardPage from './pages/DashboardPage';
 
-const Routes = () => (
-  <RouterRoutes>
-    <Route path="/" element={<HomePage />} />
-    <Route path="/signin" element={<SignInPage />} />
-    <Route path="/dashboard" element={<DashboardPage />} />
-  </RouterRoutes>
-);
+const Routes = () => {
+    const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
+
+    return (
+        <RouterRoutes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/signin" element={<SignInPage />} />
+            <Route path="/dashboard" element={isAuthenticated ? <DashboardPage /> : <Navigate to="/signin" />} />
+        </RouterRoutes>
+    );
+};
 
 export default Routes;
