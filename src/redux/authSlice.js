@@ -7,7 +7,6 @@ const initialState = {
   error: null,
 };
 
-// Async thunk pour la connexion de l'utilisateur
 export const loginUser = createAsyncThunk(
   "auth/login",
   async ({ email, password }, { rejectWithValue, dispatch }) => {
@@ -23,8 +22,6 @@ export const loginUser = createAsyncThunk(
       if (!response.ok) {
         throw new Error(data.message || "Could not log in");
       }
-
-      // Dispatch pour récupérer le profil utilisateur avec le token obtenu
       dispatch(fetchUserProfile({ token: data.body.token }));
       return data;
     } catch (error) {
@@ -34,7 +31,6 @@ export const loginUser = createAsyncThunk(
   }
 );
 
-// Async thunk pour récupérer le profil de l'utilisateur
 export const fetchUserProfile = createAsyncThunk(
   "auth/fetchUserProfile",
   async ({ token }, { rejectWithValue }) => {
@@ -56,6 +52,33 @@ export const fetchUserProfile = createAsyncThunk(
       return profileData.body;
     } catch (error) {
       console.error("Fetch profile failed:", error);
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+export const updateUserName = createAsyncThunk(
+  "auth/updateUserName",
+  async ({ token, userName }, { rejectWithValue }) => {
+    try {
+      const response = await fetch(
+        "http://localhost:3001/api/v1/user/profile",
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ userName }),
+        }
+      );
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.message || "Could not update username");
+      }
+      return data;
+    } catch (error) {
+      console.error("Update username failed:", error);
       return rejectWithValue(error.message);
     }
   }
@@ -90,6 +113,12 @@ const authSlice = createSlice({
       })
       .addCase(fetchUserProfile.rejected, (state, action) => {
         state.error = action.payload || "Failed to fetch profile";
+      })
+      .addCase(updateUserName.fulfilled, (state, action) => {
+        state.user.userName = action.payload.userName; // Assuming the API returns the updated userName
+      })
+      .addCase(updateUserName.rejected, (state, action) => {
+        state.error = action.payload || "Failed to update username";
       });
   },
 });
