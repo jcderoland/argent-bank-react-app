@@ -4,7 +4,7 @@ const initialState = {
   isAuthenticated: false,
   user: {},
   token: null,
-  error: null, // Ajout d'un champ pour gérer les erreurs
+  error: null,
 };
 
 export const loginUser = createAsyncThunk(
@@ -37,7 +37,7 @@ const authSlice = createSlice({
       state.isAuthenticated = false;
       state.user = {};
       state.token = null;
-      state.error = null; // Nettoyer les erreurs lors de la déconnexion
+      state.error = null;
     },
   },
   extraReducers: (builder) => {
@@ -46,13 +46,13 @@ const authSlice = createSlice({
         state.isAuthenticated = true;
         state.user = action.payload.user;
         state.token = action.payload.token;
-        state.error = null; // Réinitialiser les erreurs sur une connexion réussie
+        state.error = null;
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.isAuthenticated = false;
         state.user = {};
         state.token = null;
-        state.error = action.payload || "Failed to login"; // Stocker le message d'erreur
+        state.error = action.payload || "Failed to login";
       });
   },
 });
