@@ -18,7 +18,7 @@ const NavBar = () => {
 
     return (
         <nav className="main-nav">
-            <Link className="main-nav-logo" to="/">
+            <Link className="main-nav-logo" to="/argent-bank-react-app">
                 <img className="main-nav-logo-image" src={ArgentBankLogo} alt="Argent Bank Logo" />
                 <h1 className="sr-only">Argent Bank</h1>
             </Link>

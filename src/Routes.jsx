@@ -10,7 +10,7 @@ const Routes = () => {
 
     return (
         <RouterRoutes>
-            <Route path="/" element={<HomePage />} />
+            <Route path="/argent-bank-react-app" element={<HomePage />} />
             <Route path="/signin" element={<SignInPage />} />
             <Route path="/dashboard" element={isAuthenticated ? <DashboardPage /> : <Navigate to="/signin" />} />
         </RouterRoutes>
