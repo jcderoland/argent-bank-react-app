@@ -6,14 +6,15 @@ import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import { useSelector, useDispatch } from 'react-redux';
 import { logOut } from '../redux/authSlice';
 
+// NavBar component that contains navigation links and logout functionality
 const NavBar = () => {
-    const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
+    const isAuthenticated = useSelector(state => state.auth.isAuthenticated); // Check if user is authenticated
+    const dispatch = useDispatch(); // Allows dispatching actions to redux store
+    const navigate = useNavigate(); // Hook for navigation
 
     const handleLogout = () => {
-        dispatch(logOut());
-        navigate('/argent-bank-react-app'); 
+        dispatch(logOut()); // Dispatch logout action
+        navigate('/argent-bank-react-app'); // Redirect to home page after logout
     };
 
     return (

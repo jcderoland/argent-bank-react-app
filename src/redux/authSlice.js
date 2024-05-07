@@ -1,12 +1,14 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
+// Initial state of the auth module
 const initialState = {
-  isAuthenticated: false,
-  user: {},
-  token: null,
-  error: null,
+  isAuthenticated: false, // User authentication status
+  user: {}, // User data
+  token: null, // Authentication token
+  error: null, // Error messages
 };
 
+// Thunk for user login
 export const loginUser = createAsyncThunk(
   "auth/login",
   async ({ email, password }, { rejectWithValue, dispatch }) => {
@@ -31,6 +33,7 @@ export const loginUser = createAsyncThunk(
   }
 );
 
+// Thunk for fetching user profile
 export const fetchUserProfile = createAsyncThunk(
   "auth/fetchUserProfile",
   async ({ token }, { rejectWithValue }) => {
@@ -57,6 +60,7 @@ export const fetchUserProfile = createAsyncThunk(
   }
 );
 
+// Thunk for updating user name
 export const updateUserName = createAsyncThunk(
   "auth/updateUserName",
   async ({ token, userName }, { rejectWithValue }) => {
@@ -84,11 +88,13 @@ export const updateUserName = createAsyncThunk(
   }
 );
 
+// Auth slice with reducers and extra reducers
 const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
     logOut: (state) => {
+      // Log out user
       state.isAuthenticated = false;
       state.user = {};
       state.token = null;
@@ -96,6 +102,7 @@ const authSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    // Handle async actions
     builder
       .addCase(loginUser.fulfilled, (state, action) => {
         state.isAuthenticated = true;
@@ -115,7 +122,7 @@ const authSlice = createSlice({
         state.error = action.payload || "Failed to fetch profile";
       })
       .addCase(updateUserName.fulfilled, (state, action) => {
-        state.user.userName = action.payload.userName; // Assuming the API returns the updated userName
+        state.user.userName = action.payload.userName;
       })
       .addCase(updateUserName.rejected, (state, action) => {
         state.error = action.payload || "Failed to update username";

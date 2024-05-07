@@ -5,15 +5,16 @@ import NavBar from '../components/NavBar';
 import Footer from '../components/Footer';
 import AccountCard from '../components/AccountCard';
 
+// UserDashboardPage displays user-specific information and allows username updates
 const UserDashboardPage = () => {
-  const { user, token } = useSelector(state => state.auth);
-  const [editMode, setEditMode] = useState(false);
-  const [newUserName, setNewUserName] = useState(user.userName || '');
+  const { user, token } = useSelector(state => state.auth); // Access user and token from auth state
+  const [editMode, setEditMode] = useState(false); // State to toggle edit mode
+  const [newUserName, setNewUserName] = useState(user.userName || ''); // State to store new username
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    setNewUserName(user.userName);
+    setNewUserName(user.userName); // Update newUserName when user.userName changes
   }, [user.userName]);
 
   const handleSave = () => {
@@ -22,15 +23,13 @@ const UserDashboardPage = () => {
       userName: newUserName
     }))
     .then(() => {
-      dispatch(fetchUserProfile({ token })); 
+      dispatch(fetchUserProfile({ token })); // Fetch updated profile after username change
     })
     .catch((error) => {
       console.error('Failed to update the user name', error);
     });
-    setEditMode(false);
+    setEditMode(false); // Exit edit mode after save
 };
-
-
 
   return (
     <div>

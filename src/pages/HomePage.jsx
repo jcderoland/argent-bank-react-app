@@ -6,6 +6,7 @@ import chatIcon from '../img/icon-chat.png';
 import moneyIcon from '../img/icon-money.png';
 import securityIcon from '../img/icon-security.png';
 
+// HomePage component displays the main landing page content
 const HomePage = () => (
   <div>
     <NavBar />

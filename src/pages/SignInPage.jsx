@@ -5,12 +5,13 @@ import { useDispatch } from 'react-redux';
 import { loginUser } from '../redux/authSlice';
 import { useNavigate } from 'react-router-dom';
 
+// SignInPage handles user login functionality
 const SignInPage = () => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
+    const [email, setEmail] = useState(''); // State to store email input
+    const [password, setPassword] = useState(''); // State to store password input
+    const [error, setError] = useState(''); // State to store login error message
+    const dispatch = useDispatch(); // Allows dispatching actions to redux store
+    const navigate = useNavigate(); // Hook for navigation
 
     const handleLogin = (e) => {
         e.preventDefault();
@@ -21,10 +22,10 @@ const SignInPage = () => {
         dispatch(loginUser({ email, password }))
             .unwrap()
             .then(() => {
-                navigate('/dashboard');
+                navigate('/dashboard'); // Navigate to dashboard after successful login
             })
             .catch((error) => {
-                setError(error.message || "Login failed");
+                setError(error.message || "Login failed"); // Set error if login fails
             });
     };
 
