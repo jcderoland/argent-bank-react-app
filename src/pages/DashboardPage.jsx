@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { updateUserName } from '../redux/authSlice';
+import { updateUserName, fetchUserProfile } from '../redux/authSlice';
 import NavBar from '../components/NavBar';
 import Footer from '../components/Footer';
 import AccountCard from '../components/AccountCard';
@@ -12,13 +12,25 @@ const UserDashboardPage = () => {
 
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    setNewUserName(user.userName);
+  }, [user.userName]);
+
   const handleSave = () => {
     dispatch(updateUserName({
       token, 
       userName: newUserName
-    }));
+    }))
+    .then(() => {
+      dispatch(fetchUserProfile({ token })); 
+    })
+    .catch((error) => {
+      console.error('Failed to update the user name', error);
+    });
     setEditMode(false);
-  };
+};
+
+
 
   return (
     <div>

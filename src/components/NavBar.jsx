@@ -13,7 +13,7 @@ const NavBar = () => {
 
     const handleLogout = () => {
         dispatch(logOut());
-        navigate('/'); 
+        navigate('/argent-bank-react-app'); 
     };
 
     return (
