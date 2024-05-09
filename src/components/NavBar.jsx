@@ -2,19 +2,20 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import ArgentBankLogo from '../img/argentBankLogo.webp';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
+import { faUserCircle, faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 import { useSelector, useDispatch } from 'react-redux';
 import { logOut } from '../redux/authSlice';
 
 // NavBar component that contains navigation links and logout functionality
 const NavBar = () => {
-    const isAuthenticated = useSelector(state => state.auth.isAuthenticated); // Check if user is authenticated
-    const dispatch = useDispatch(); // Allows dispatching actions to redux store
-    const navigate = useNavigate(); // Hook for navigation
+    const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
+    const userName = useSelector(state => state.auth.user.userName);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const handleLogout = () => {
-        dispatch(logOut()); // Dispatch logout action
-        navigate('/argent-bank-react-app'); // Redirect to home page after logout
+        dispatch(logOut());
+        navigate('/argent-bank-react-app');
     };
 
     return (
@@ -23,17 +24,23 @@ const NavBar = () => {
                 <img className="main-nav-logo-image" src={ArgentBankLogo} alt="Argent Bank Logo" />
                 <h1 className="sr-only">Argent Bank</h1>
             </Link>
-            <div>
+            <div className="navigation-items">
                 {!isAuthenticated ? (
-                    <Link className="main-nav-item" to="/signin">
+                    <Link className="main-nav-item" to="/signin" aria-label="Sign in">
                         <FontAwesomeIcon icon={faUserCircle} />
-                        Sign In
+                        <span>Sign In</span>
                     </Link>
                 ) : (
-                    <button className="main-nav-item" onClick={handleLogout}>
-                        <FontAwesomeIcon icon={faUserCircle} />
-                        Log Out
-                    </button>
+                    <div className='username-logout'>
+                        <Link to="/dashboard" aria-label="User profile">
+                            <FontAwesomeIcon icon={faUserCircle}/>
+                            <span>{userName}</span>
+                        </Link>
+                        <button className="main-nav-item" onClick={handleLogout} aria-label="Sign out">
+                            <FontAwesomeIcon icon={faRightFromBracket} />
+                            <span>Sign Out</span>
+                        </button>
+                    </div>
                 )}
             </div>
         </nav>

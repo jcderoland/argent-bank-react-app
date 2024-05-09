@@ -69,7 +69,7 @@ const UserDashboardPage = () => {
             </div>
           ) : (
             <>
-              <h1>Welcome back<br />{user.userName}!</h1>
+              <h1 className='welcome-msg'>Welcome back<br />{user.userName}!</h1>
               <button onClick={() => setEditMode(true)}>Edit Name</button>
             </>
           )}
