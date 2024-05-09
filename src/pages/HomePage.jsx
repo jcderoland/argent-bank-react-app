@@ -2,9 +2,9 @@ import React from 'react';
 import NavBar from '../components/NavBar.jsx';
 import Footer from '../components/Footer.jsx';
 import FeatureItem from '../components/FeatureItem.jsx';
-import chatIcon from '../img/icon-chat.png';
-import moneyIcon from '../img/icon-money.png';
-import securityIcon from '../img/icon-security.png';
+import chatIcon from '../img/icon-chat.webp';
+import moneyIcon from '../img/icon-money.webp';
+import securityIcon from '../img/icon-security.webp';
 
 // HomePage component displays the main landing page content
 const HomePage = () => (
